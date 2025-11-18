@@ -16,5 +16,6 @@ app.use(cookieParser());
 require("./config/mongoose.config");
 require("./routes/user.routes")(app);
 require("./routes/stonk.routes")(app);
+require("./routes/market.routes")(app);
 
 app.listen(8000, () => console.log("Connected to port 8000"));

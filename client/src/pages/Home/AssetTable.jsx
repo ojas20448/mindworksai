@@ -329,35 +329,43 @@ export function AssetTable({ coins, category }) {
         </TableHeader>
 
         <TableBody className="">
-          {coins.map((item) => (
-            <TableRow
-            className="cursor-pointer"
-              onClick={() => navigate(`/market/${item.id}`)}
-              key={item.id}
-            >
-              <TableCell className="font-medium flex items-center gap-2">
-                <Avatar className="-z-50">
-                  <AvatarImage src={item.image} alt={item.symbol} />
-                </Avatar>
-                <span> {item.name}</span>
-              </TableCell>
-              <TableCell>{item.symbol.toUpperCase()}</TableCell>
-              <TableCell>{item.total_volume}</TableCell>
-              <TableCell>{item.market_cap}</TableCell>
-              <TableCell
-                className={`${
-                  item.market_cap_change_percentage_24h < 0
-                    ? "text-red-600"
-                    : "text-green-600"
-                }`}
+          {coins && coins.length > 0 ? (
+            coins.map((item) => (
+              <TableRow
+              className="cursor-pointer"
+                onClick={() => navigate(`/market/${item.id}`)}
+                key={item.id}
               >
-                {item.market_cap_change_percentage_24h}%
-              </TableCell>
-              <TableCell className="text-right">{item.current_price}</TableCell>
+                <TableCell className="font-medium flex items-center gap-2">
+                  <Avatar className="-z-50">
+                    <AvatarImage src={item.image} alt={item.symbol} />
+                  </Avatar>
+                  <span> {item.name}</span>
+                </TableCell>
+                <TableCell>{item.symbol.toUpperCase()}</TableCell>
+                <TableCell>{item.total_volume}</TableCell>
+                <TableCell>{item.market_cap}</TableCell>
+                <TableCell
+                  className={`${
+                    item.market_cap_change_percentage_24h < 0
+                      ? "text-red-600"
+                      : "text-green-600"
+                  }`}
+                >
+                  {item.market_cap_change_percentage_24h}%
+                </TableCell>
+                <TableCell className="text-right">{item.current_price}</TableCell>
 
-              {/* market_cap_change_percentage_24h */}
+                {/* market_cap_change_percentage_24h */}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={6} className="text-center py-10 text-gray-500">
+                {coins === undefined || coins === null ? 'Loading coins...' : 'No coins available'}
+              </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </ScrollArea>
     </Table>

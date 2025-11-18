@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { AssetTable } from "./AssetTable";
 import { Button } from "../../components/ui/button";
 import StockChart from "../StockDetails/StockChart";
+import CryptoChart from "../StockDetails/CryptoChart";
 import {
   ChatBubbleIcon,
   ChevronLeftIcon,
@@ -202,45 +203,51 @@ const Home = () => {
         </div>
 
         <div className="hidden lg:block lg:w-[50%] p-5">
-          <StockChart coinId={"bitcoin"} />
-          <div className="flex gap-5 items-center">
-            <div>
-              <Avatar>
-                <AvatarImage src={coin.coinDetails?.image?.large} />
-              </Avatar>
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <p>{coin.coinDetails?.symbol?.toUpperCase()}</p>
-                <DotIcon className="text-gray-400" />
-                <p className="text-gray-400">{coin.coinDetails?.name}</p>
+          {category === "trading" ? (
+            <CryptoChart symbol="BTC/USDT" />
+          ) : (
+            <>
+              <StockChart coinId={"bitcoin"} />
+              <div className="flex gap-5 items-center">
+                <div>
+                  <Avatar>
+                    <AvatarImage src={coin.coinDetails?.image?.large} />
+                  </Avatar>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <p>{coin.coinDetails?.symbol?.toUpperCase()}</p>
+                    <DotIcon className="text-gray-400" />
+                    <p className="text-gray-400">{coin.coinDetails?.name}</p>
+                  </div>
+                  <div className="flex items-end gap-2">
+                    <p className="text-xl font-bold">
+                      {coin.coinDetails?.market_data.current_price.usd}
+                    </p>
+                    <p
+                      className={`${
+                        coin.coinDetails?.market_data.market_cap_change_24h < 0
+                          ? "text-red-600"
+                          : "text-green-600"
+                      }`}
+                    >
+                      <span className="">
+                        {coin.coinDetails?.market_data.market_cap_change_24h}
+                      </span>
+                      <span>
+                        (
+                        {
+                          coin.coinDetails?.market_data
+                            .market_cap_change_percentage_24h
+                        }
+                        %)
+                      </span>
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-end gap-2">
-                <p className="text-xl font-bold">
-                  {coin.coinDetails?.market_data.current_price.usd}
-                </p>
-                <p
-                  className={`${
-                    coin.coinDetails?.market_data.market_cap_change_24h < 0
-                      ? "text-red-600"
-                      : "text-green-600"
-                  }`}
-                >
-                  <span className="">
-                    {coin.coinDetails?.market_data.market_cap_change_24h}
-                  </span>
-                  <span>
-                    (
-                    {
-                      coin.coinDetails?.market_data
-                        .market_cap_change_percentage_24h
-                    }
-                    %)
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
+            </>
+          )}
         </div>
       </div>
       <section className="absolute bottom-5 right-5 z-40 flex flex-col justify-end items-end gap-2">

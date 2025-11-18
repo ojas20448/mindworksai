@@ -32,3 +32,5 @@
 /.vscode/
 # local history
 /.history
+
+/server/node_modules

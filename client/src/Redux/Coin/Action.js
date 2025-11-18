@@ -5,7 +5,7 @@ import api, { API_BASE_URL } from "../../Api/api";
 export const fetchCoinList = (page) => async (dispatch) => {
     dispatch({ type: FETCH_COIN_LIST_REQUEST });
     try {
-      const response = await axios.get(`${API_BASE_URL}/coins?page=${page}`);
+      const response = await axios.get(`${API_BASE_URL}/api/coins?page=${page}`);
       dispatch({ type: FETCH_COIN_LIST_SUCCESS, payload: response.data });
       console.log("-------",response.data)
     } catch (error) {
@@ -17,7 +17,7 @@ export const fetchCoinList = (page) => async (dispatch) => {
   export const getTop50CoinList = () => async (dispatch) => {
     dispatch({ type: FETCH_TOP_50_COINS_REQUEST });
     try {
-      const response = await axios.get(`${API_BASE_URL}/coins/top50`);
+      const response = await axios.get(`${API_BASE_URL}/api/coins/top50`);
       dispatch({ type: FETCH_TOP_50_COINS_SUCCESS, payload: response.data });
       console.log("top 50",response.data)
     } catch (error) {
